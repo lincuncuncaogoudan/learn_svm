@@ -8,7 +8,7 @@ The solution is written in python with use of [scikit-learn](http://scikit-learn
 ![Sample MNIST digits visualization](/images/mnist_digits.png)
 
 #  写给叶同学
-###---------------------------------------------------------------------------------------#####
+###----------------------------------------------------------
 1.python 版本3.5/3.6
 2.pip install -r requirement.txt
 3.还有其他对应opencv-python的包请自行安装
@@ -16,7 +16,7 @@ The solution is written in python with use of [scikit-learn](http://scikit-learn
 5.svm_mnist_classfiction 可以直接调参,debug一遍看看过程即可，
 6.embbeing为中间层特征，原作者通过pca降维选取8维特征，想了解的话可以自己了解，不能直接运行，有些东西要自己修改
 7.其他py文件可暂时不用管
-###--------------------------------------------------------------------------------------
+###----------------------------------------------------------
 
 
 The goal of this project is not to achieve the state of the art performance, rather teach you 
