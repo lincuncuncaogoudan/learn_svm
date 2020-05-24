@@ -1,3 +1,9 @@
+import random
+
+import cv2
+
+import utils_paths
+
 print(__doc__)
 # Author: Krzysztof Sopyla <krzysztofsopyla@gmail.com>
 # https://machinethoughts.me
@@ -16,27 +22,50 @@ from sklearn import datasets, svm, pipeline
 from sklearn.kernel_approximation import (RBFSampler, Nystroem)
 from sklearn.decomposition import PCA
 
-#fetch original mnist dataset
-from sklearn.datasets import fetch_mldata
-mnist = fetch_mldata('MNIST original', data_home='./')
+data_path="images/data"
+print("------开始读取数据------")
+data = []
+labels = []
+
+imagePaths = sorted(list(utils_paths.list_images(data_path)))
+random.seed(42)
+random.shuffle(imagePaths)
+
+print("------------------------------>")
+
+for i,imagePath in enumerate(imagePaths):
+    image = cv2.imread(imagePath,cv2.IMREAD_GRAYSCALE)
+    image = cv2.resize(image, (28, 28))
+    image=image.ravel()
+    data.append(image)
+
+    label = imagePath.split(os.path.sep)[-2]
+    labels.append(label)
+
 
 #minist object contains: data, COL_NAMES, DESCR, target fields
 #you can check it by running
-mnist.keys()
+# mnist.keys()
 
 #data field is 70k x 784 array, each row represents pixels from 28x28=784 image
-images = mnist.data
-targets = mnist.target
+# images = mnist.data
+# targets = mnist.target
 
-# Let's have a look at the random 16 images, 
+images = np.array(data)
+labels=np.array(labels,dtype=np.int32)
+targets = labels
+
+# Let's have a look at the random 16 images,
 # We have to reshape each data row, from flat array of 784 int to 28x28 2D array
+
 #pick  random indexes from 0 to size of our dataset
 show_some_digits(images,targets)
 
 
 #full dataset classification
-X_data =images/255.0
+X_data = images/255.0
 Y = targets
+
 
 #split data to train and test 
 from sklearn.cross_validation import train_test_split
@@ -63,17 +92,17 @@ import datetime as dt
 # We learn the digits on train part
 
 kernel_svm_start_time = dt.datetime.now()
-print 'Start kernel svm learning at {}'.format(str(kernel_svm_start_time))
+print("Start kernel svm learning at {}").format(str(kernel_svm_start_time))
 kernel_svm.fit(X_train, y_train)
 kernel_svm_end_time = dt.datetime.now()
 elapsed_time = kernel_svm_end_time - kernel_svm_start_time
-print 'End kernel svm learning at {}'.format(str(kernel_svm_end_time))
-print 'Elapsed learning {}'.format(str(elapsed_time))
+print('End kernel svm learning at {}').format(str(kernel_svm_end_time))
+print('Elapsed learning {}').format(str(elapsed_time))
 
 kernel_svm_start_time = dt.datetime.now()
 kernel_svm_score = kernel_svm.score(X_test, y_test)
 elapsed_time = dt.datetime.now() - kernel_svm_start_time
-print 'Prediction takes {}'.format(str(elapsed_time))
+print('Prediction takes {}').format(str(elapsed_time))
 
 linear_svm_time = dt.datetime.now()
 linear_svm.fit(X_train, y_train)

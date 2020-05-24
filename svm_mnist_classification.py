@@ -4,6 +4,10 @@
 # License: MIT
 
 # Standard scientific Python imports
+import os
+import random
+
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import time
@@ -15,19 +19,45 @@ from sklearn import datasets, svm, metrics
 from sklearn.datasets import fetch_mldata
 
 # import custom module
+import utils_paths
 from mnist_helpers import *
 
 
 # it creates mldata folder in your root project folder
-mnist = fetch_mldata('MNIST original', data_home='./')
+#mnist = fetch_mldata('MNIST original', data_home='./')
+
+data_path="images/data"
+print("------开始读取数据------")
+data = []
+labels = []
+
+imagePaths = sorted(list(utils_paths.list_images(data_path)))
+random.seed(42)
+random.shuffle(imagePaths)
+
+print("------------------------------>")
+
+for i,imagePath in enumerate(imagePaths):
+    image = cv2.imread(imagePath,cv2.IMREAD_GRAYSCALE)
+    image = cv2.resize(image, (28, 28))
+    image=image.ravel()
+    data.append(image)
+
+    label = imagePath.split(os.path.sep)[-2]
+    labels.append(label)
+
 
 #minist object contains: data, COL_NAMES, DESCR, target fields
 #you can check it by running
-mnist.keys()
+# mnist.keys()
 
 #data field is 70k x 784 array, each row represents pixels from 28x28=784 image
-images = mnist.data
-targets = mnist.target
+# images = mnist.data
+# targets = mnist.target
+
+images = np.array(data)
+labels=np.array(labels,dtype=np.int32)
+targets = labels
 
 # Let's have a look at the random 16 images, 
 # We have to reshape each data row, from flat array of 784 int to 28x28 2D array
