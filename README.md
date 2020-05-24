@@ -18,7 +18,7 @@ The solution is written in python with use of [scikit-learn](http://scikit-learn
   7.其他py文件可暂时不用管<br>
   ###----------------------------------------------------------<br>
 
-
+## 感谢原作者<br>
 The goal of this project is not to achieve the state of the art performance, rather teach you 
 **how to train SVM classifier on image data** with use of SVM from sklearn. 
 Although the solution isn't optimized for high accuracy, the results are quite good (see table below). 
