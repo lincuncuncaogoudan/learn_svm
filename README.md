@@ -9,7 +9,7 @@ The solution is written in python with use of [scikit-learn](http://scikit-learn
 
 #  写给叶同学
   ###----------------------------------------------------------
-  1.python 版本3.5/3.6
+  1.python 版本3.5/3.6<br>
   2.pip install -r requirement.txt
   3.还有其他对应opencv-python的包请自行安装
   4.get_mnsit可以自动加载mnsit数据集的图片，大小为480*640
